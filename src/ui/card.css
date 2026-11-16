@@ -1,0 +1,72 @@
+/* Tarjeta de ficha — fondo pastel del primer tipo, reconocimientos como medallas. */
+.hof-card {
+  --ink: #1f2430; --muted: #5b6270; --line: rgba(31, 36, 48, .14); --focus: #2b59ff;
+  --tint: #e6e3d8;
+  width: min(300px, 100%); aspect-ratio: 5 / 7; perspective: 1200px; color: var(--ink);
+  font-family: ui-rounded, 'Hiragino Maru Gothic ProN', 'Nunito', 'Segoe UI', system-ui, sans-serif;
+}
+.hof-card *, .hof-card *::before, .hof-card *::after { box-sizing: border-box; }
+.hof-card__inner { position: relative; width: 100%; height: 100%; transform-style: preserve-3d; transition: transform .55s cubic-bezier(.3, .7, .2, 1); }
+.hof-card[data-flipped='true'] .hof-card__inner { transform: rotateY(180deg); }
+
+.hof-face {
+  position: absolute; inset: 0; display: flex; flex-direction: column; gap: 10px; padding: 14px;
+  border-radius: 22px; background: color-mix(in srgb, var(--tint) 38%, #fff); border: 2px solid color-mix(in srgb, var(--tint) 70%, #6b7280);
+  backface-visibility: hidden; -webkit-backface-visibility: hidden; overflow: hidden;
+}
+.hof-face--back { transform: rotateY(180deg); overflow-y: auto; font-size: .86rem; }
+
+.hof-stage { position: relative; flex: 0 0 46%; min-height: 0; display: grid; place-items: center; border-radius: 50% 50% 46% 46% / 62% 62% 38% 38%; background: var(--tint); }
+.hof-sprite { all: unset; cursor: pointer; position: relative; display: block; width: 100%; height: 100%; min-height: 0; border-radius: inherit; }
+.hof-sprite img { position: absolute; inset: 11%; width: 78%; height: 78%; object-fit: contain; filter: drop-shadow(0 6px 5px rgba(0, 0, 0, .18)); } /* absoluta: el tamaño del archivo no altera el de la tarjeta */
+.hof-sprite img[data-pixelated='true'] { image-rendering: pixelated; }
+.hof-sprite__empty { position: absolute; inset: 0; display: grid; place-items: center; color: var(--muted); font-size: .8rem; }
+.hof-card[data-dead='true'] .hof-sprite img { filter: grayscale(1) contrast(.9) drop-shadow(0 4px 4px rgba(0, 0, 0, .15)); opacity: .85; }
+.hof-ribbon { position: absolute; top: 10px; left: -4px; padding: 3px 12px 3px 10px; background: #4b5160; color: #fff; font-weight: 700; font-size: .78rem; border-radius: 0 10px 10px 0; }
+.hof-shiny { position: absolute; top: 10px; right: 6px; display: flex; align-items: center; gap: 4px; padding: 2px 8px 2px 4px; background: #fff; border-radius: 99px; font-size: .74rem; font-weight: 700; }
+
+.hof-id h3 { margin: 0; font-size: 1.3rem; line-height: 1.15; font-weight: 800; letter-spacing: -.01em; }
+.hof-gender { margin-left: 6px; font-weight: 700; color: var(--muted); }
+.hof-species { margin: 2px 0 0; color: var(--muted); font-size: .86rem; }
+.hof-meta { display: flex; align-items: center; justify-content: space-between; margin-top: 8px; gap: 8px; }
+.hof-level { font-weight: 800; font-variant-numeric: tabular-nums; }
+.hof-types { display: flex; gap: 6px; margin: 0; padding: 0; list-style: none; }
+.hof-type { display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px 3px 6px; background: #fff; border: 1px solid var(--line); border-radius: 99px; font-size: .78rem; font-weight: 700; }
+.hof-type::before { content: ''; width: 10px; height: 10px; border-radius: 3px; background: var(--dot); border: 1px solid rgba(0, 0, 0, .25); }
+
+.hof-medals { display: flex; flex-wrap: wrap; gap: 6px; margin: auto 0 0; padding: 0; list-style: none; min-height: 28px; align-items: center; }
+.hof-medal { display: block; filter: drop-shadow(0 1px 1px rgba(0, 0, 0, .3)); }
+.hof-none { color: var(--muted); font-size: .8rem; }
+
+.hof-flip { all: unset; box-sizing: border-box; cursor: pointer; text-align: center; padding: 9px 12px; border-radius: 12px; background: var(--ink); color: #fff; font-weight: 700; font-size: .88rem; }
+.hof-flip:hover { background: #343b4d; }
+.hof-card :focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+
+.hof-back-title { margin: 0; font-size: 1.05rem; }
+.hof-facts { display: grid; grid-template-columns: auto 1fr; gap: 2px 10px; margin: 0; }
+.hof-facts dt { color: var(--muted); } .hof-facts dd { margin: 0; font-weight: 700; }
+.hof-stats { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+.hof-stats th, .hof-stats td { padding: 3px 4px; text-align: right; border-bottom: 1px solid var(--line); }
+.hof-stats th[scope='row'], .hof-stats th:first-child { text-align: left; font-weight: 600; }
+.hof-stats td:nth-child(2) { position: relative; text-align: right; min-width: 74px; }
+.hof-bar { position: absolute; left: 4px; top: 50%; height: 6px; width: calc(var(--v) * 40px); transform: translateY(-50%); background: color-mix(in srgb, var(--tint) 40%, #4b5160); border-radius: 3px; }
+.hof-moves { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin: 0; padding: 0; list-style: none; }
+.hof-moves li { padding: 4px 8px; background: #fff; border: 1px solid var(--line); border-radius: 8px; font-weight: 600; }
+.hof-why { margin: 0; padding: 0; list-style: none; display: grid; gap: 6px; }
+.hof-why li { display: flex; gap: 8px; align-items: flex-start; }
+.hof-note { margin: 0; color: var(--muted); }
+.hof-face--back .hof-flip { margin-top: auto; }
+.hof-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+
+.hof-zoom { border: 0; border-radius: 20px; padding: 18px; background: #fff; max-width: min(92vw, 420px); }
+.hof-zoom::backdrop { background: rgba(20, 24, 33, .55); }
+.hof-zoom img { display: block; width: min(80vw, 360px); height: auto; margin: 0 auto 12px; }
+.hof-zoom img[data-pixelated='true'] { image-rendering: pixelated; }
+
+/* Movimiento reducido: sin giro 3D; las caras se intercambian con un fundido breve. */
+@media (prefers-reduced-motion: reduce) {
+  .hof-card__inner, .hof-card[data-flipped='true'] .hof-card__inner { transform: none; transition: none; }
+  .hof-face { backface-visibility: visible; -webkit-backface-visibility: visible; transition: opacity .15s linear; }
+  .hof-face--back { transform: none; }
+  .hof-card[data-flipped='false'] .hof-face--back, .hof-card[data-flipped='true'] .hof-face--front { opacity: 0; pointer-events: none; }
+}
